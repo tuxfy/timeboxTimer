@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<header>
+	<style>
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        content {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+       	minutes, actions {
+			display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-content: stretch;
+		}		
+		minutes button, actions button {
+            flex: 0 0 30%;
+			font-size: 2em;
+			text-align: center;
+		}	
+		main {
+			display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            align-items: center;
+            flex: 1;
+		}
+		main div{
+			font-family: 'ZCOOL QingKe HuangYou', cursive;
+			font-size: 10em;
+			text-align: center;
+		}
+        footer {
+			display: flex;
+            justify-content: center;
+            align-content: stretch;
+		}
+	</style>
+	<link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+</header>
+
+
+<content>
+    <header>
+        <minutes>
+            <button data-cy="button1" value="1">➕ <br>1min</button>
+            <button data-cy="button5" value="5">➕ <br>5min</button>
+            <button data-cy="button10" value="10">➕ <br>10min</button>
+        </minutes>
+        <actions>
+            <button data-cy="buttonStart">▶️ <br>Start</button>
+            <button data-cy="buttonStop">⏹️ <br>Stop</button>
+            <button data-cy="buttonReset">🗑️ <br>Reset</button>
+        </actions>
+    </header>
+    <main>
+        <div data-cy="timerHours" id="timerHours"></div>
+        <div data-cy="timerMinutes" id="timerMinutes"></div>
+        <div data-cy="timerSeconds" id="timerSeconds"></div>
+    </main>
+    <footer>
+        <audio data-cy="alarm" src="media/temple_bell.mp3" controls>
+            Your browser does not support the <code>audio</code> element.
+        </audio>
+    </footer>
+</content>
+
+<script>
+var countDownTime = 0;
+var countDownDate;
+var timerInterval;
+show();
+
+document.querySelectorAll("button").forEach( (button) => {
+	button.addEventListener("click", function(){
+		switch(button.dataset.cy){
+			case "buttonStart":								
+				start();
+				break;
+			case "buttonStop":
+				stop();
+				break;
+			case "buttonReset":
+				reset();
+				break;
+			default:
+				countDownTime += button.value * 1000 * 60;
+				var now = new Date();
+				countDownDate = new Date(now.getTime() + countDownTime);
+				show(countDownTime);				
+		}		
+	});
+});
+
+function show(time = 0){
+	// Time calculations for days, hours, minutes and seconds
+	var days = Math.floor(time / (1000 * 60 * 60 * 24));
+	var hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	var minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+	var seconds = Math.floor((time % (1000 * 60)) / 1000);
+
+	// Display the result in the element with id="demo"
+	document.getElementById("timerHours").innerHTML = hours + "h ";
+	document.getElementById("timerMinutes").innerHTML = minutes + "m ";
+	document.getElementById("timerSeconds").innerHTML = seconds + "s ";
+}
+
+function reset(){
+	stop();
+	countDownTime = 0;
+	show();
+}
+
+function stop(){
+	clearInterval(timerInterval);
+}
+
+function start(){
+	var now = new Date();
+	countDownDate = new Date(now.getTime() + countDownTime);
+
+	// Update the count down every 1 second
+	timerInterval= setInterval(function() {
+		// Get today's date and time
+		// var start = new Date().getTime();
+
+		// Find the distance between start and the count down date
+		// countDownTime = countDownDate - start;
+        // just a workaround for now
+        countDownTime = countDownTime - ( 1000 );
+
+		show(countDownTime);
+		// If the count down is finished, reset and play sound
+		if (countDownTime  < 0) {            
+            reset();
+			document.querySelector("audio").play();
+		}
+	}, 1000);
+}
+
+
+</script>
