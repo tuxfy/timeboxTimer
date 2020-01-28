@@ -4,53 +4,43 @@
         html, body {
             width: 100%;
             height: 100%;
+            margin: 0;
+            padding: 0;
         }
         content {
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
             min-height: 100vh;
         }
-       	minutes, actions {
-			display: flex;
-            justify-content: center;
+
+
+        header{
+            display: flex;
             flex-wrap: wrap;
             align-content: stretch;
-		}		
-		minutes button, actions button {
-            flex: 0 0 30%;
-			font-size: 2em;
-			text-align: center;
-		}	
-        main {
-			display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-		}
-		time {
-			display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            align-items: center;
-            flex: 1;
-		}
-		time div{
-			font-family: 'ZCOOL QingKe HuangYou', cursive;
-			font-size: 10em;
-			text-align: center;
-		}
-        timelist{            
+        }
+        main{
+            display: flex;
+        }
+
+
+        header button{
+            flex: 1 0 33%;
+            font-size: 1.5em;
+        }
+        timeList{
             font-family: 'ZCOOL QingKe HuangYou', cursive;
-			font-size: 1.3em;      
+			font-size: 1.3em;             
         }
         timelist ul{
             list-style: none;
         }
-        footer {
-			display: flex;
-            justify-content: center;
-            align-content: stretch;
-		}
+        time{
+            font-family: 'ZCOOL QingKe HuangYou', cursive;
+			font-size: 10em;  
+        }
 	</style>
 	<link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
 </header>
@@ -58,54 +48,48 @@
 
 <content>
     <header>
-        <minutes>
-            <button id="button1" data-cy="button1" value="1">➕ <br>1min</button>
-            <button id="button5" data-cy="button5" value="5">➕ <br>5min</button>
-            <button id="button10" data-cy="button10" value="10">➕ <br>10min</button>
-        </minutes>
-        <actions>
-            <button id="buttonStart" data-cy="buttonStart">▶️ <br>Start</button>
-            <button id="buttonStop" data-cy="buttonStop">⏹️ <br>Stop</button>
-            <button id="buttonReset" data-cy="buttonReset">🗑️ <br>Reset</button>
-            <button id="buttonList" data-cy="buttonList">⊕ <br>To List</button>
-        </actions>
+        <button id="button1" data-cy="button1" value="1">➕ <br>1min</button>
+        <button id="button5" data-cy="button5" value="5">➕ <br>5min</button>
+        <button id="button10" data-cy="button10" value="10">➕ <br>10min</button>
+        <button id="buttonStart" data-cy="buttonStart">▶️ <br>Start</button>
+        <button id="buttonStop" data-cy="buttonStop">⏹️ <br>Stop</button>
+        <button id="buttonReset" data-cy="buttonReset">🗑️ <br>Reset</button>
+        <button id="buttonList" data-cy="buttonList">⊕ <br>To List</button>
     </header>
+    <audio data-cy="alarm" src="media/boxing_bell.mp3" controls>
+        Your browser does not support the <code>audio</code> element.
+    </audio>
     <main>      
-        <timelist>
-            <ul></ul>
-        </timelist>      
         <time>
             <div data-cy="timerHours" id="timerHours"></div>
             <div data-cy="timerMinutes" id="timerMinutes"></div>
             <div data-cy="timerSeconds" id="timerSeconds"></div>
-        </time>            
+        </time>    
+        <timelist>
+            <ul></ul>
+        </timelist>         
     </main>
     <footer>
-        <audio data-cy="alarm" src="media/boxing_bell.mp3" controls>
-            Your browser does not support the <code>audio</code> element.
-        </audio>
+        
     </footer>
 </content>
 
 <script>
-(function() {
     let timeList = [];
     let countDownTime = 0;
     let countDownDate;
     let timerInterval;
 
     document.addEventListener("keyup", (e) => {
-        // console.log(e.key);
         // switch(e.key){
-        //     case "Enter":                 
-        //         document.querySelector('#buttonList').focus();
+        //     case "l":                             
         //         document.querySelector('#buttonList').click();
-            // case "1":
-            //     document.querySelector('button[value="1"][data-cy="button1"]').click();
-            // case "5":
-            //     document.querySelector('button[data-cy="button1"]').click();
-            // case "9":
-            //     document.querySelector('button[data-cy="button1"]').click();
+        //     case "1":
+        //         document.querySelector('#button1').click();
+        //     case "5":
+        //         document.querySelector('#button5').click();
+        //     case "9":
+        //         document.querySelector('#button10').click();
         // }
     });
 
@@ -190,15 +174,13 @@
         }
     }
 
-    const reset= () => {
+    const reset = () => {
         stop();
         countDownTime = 0;
         show();
     }
 
-    const stop= () => {
-        clearInterval(timerInterval);
-    }
+    const stop = () => { clearInterval(timerInterval); }
 
     // const startTimerList = () => {
     //     if( timeList.length > 0 ){
@@ -236,7 +218,7 @@
     
 
     const start = (index = 0) => {     
-        if( timeList.length > 0 && countDownTime == 0 ){
+        if( timeList.length > 0 ){
             startFromTimerList(index);
             show(countDownTime);
         }
@@ -244,7 +226,7 @@
         var now = new Date();
         countDownDate = new Date(now.getTime() + countDownTime);
         // Update the count down every 1 second
-        timerInterval= setInterval(function() {
+        timerInterval = setInterval(function() {
             // Get today's date and time
             // var start = new Date().getTime();
 
@@ -259,8 +241,7 @@
                 reset();
                 document.querySelector("audio").play();
             }
-        }, 1000);               
+        }, 200);               
     }
 
-})();
 </script>
