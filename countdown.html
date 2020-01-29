@@ -32,14 +32,14 @@
         }
         timeList{
             font-family: 'ZCOOL QingKe HuangYou', cursive;
-			font-size: 1.3em;             
+			font-size: 1.3em;
         }
         timelist ul{
             list-style: none;
         }
         time{
             font-family: 'ZCOOL QingKe HuangYou', cursive;
-			font-size: 10em;  
+			font-size: 10em;
         }
 	</style>
 	<link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
@@ -48,29 +48,28 @@
 
 <content>
     <header>
-        <button id="button1" data-cy="button1" value="1">➕ <br>1min</button>
-        <button id="button5" data-cy="button5" value="5">➕ <br>5min</button>
-        <button id="button10" data-cy="button10" value="10">➕ <br>10min</button>
-        <button id="buttonStart" data-cy="buttonStart">▶️ <br>Start</button>
-        <button id="buttonStop" data-cy="buttonStop">⏹️ <br>Stop</button>
-        <button id="buttonReset" data-cy="buttonReset">🗑️ <br>Reset</button>
-        <button id="buttonList" data-cy="buttonList">⊕ <br>To List</button>
+        <button id="button1" value="1">➕ <br>1min</button>
+        <button id="button5" value="5">➕ <br>5min</button>
+        <button id="button10" value="10">➕ <br>10min</button>
+        <button id="buttonStart">▶️ <br>Start</button>
+        <button id="buttonStop">⏹️ <br>Stop</button>
+        <button id="buttonReset">🗑️ <br>Reset</button>
+        <button id="buttonList">⊕ <br>To List</button>
     </header>
-    <audio data-cy="alarm" src="media/boxing_bell.mp3" controls>
-        Your browser does not support the <code>audio</code> element.
-    </audio>
-    <main>      
+    <main>
         <time>
-            <div data-cy="timerHours" id="timerHours"></div>
-            <div data-cy="timerMinutes" id="timerMinutes"></div>
-            <div data-cy="timerSeconds" id="timerSeconds"></div>
-        </time>    
+            <div id="timerHours"></div>
+            <div id="timerMinutes"></div>
+            <div id="timerSeconds"></div>
+        </time>
         <timelist>
             <ul></ul>
-        </timelist>         
+        </timelist>
     </main>
     <footer>
-        
+        <audio id="alarm" src="media/boxing_bell.mp3" controls>
+        Your browser does not support the <code>audio</code> element.
+    </audio>
     </footer>
 </content>
 
@@ -78,28 +77,15 @@
     let timeList = [];
     let countDownTime = 0;
     let countDownDate;
-    let timerInterval;
-
-    document.addEventListener("keyup", (e) => {
-        // switch(e.key){
-        //     case "l":                             
-        //         document.querySelector('#buttonList').click();
-        //     case "1":
-        //         document.querySelector('#button1').click();
-        //     case "5":
-        //         document.querySelector('#button5').click();
-        //     case "9":
-        //         document.querySelector('#button10').click();
-        // }
-    });
+    let timerInterval;    
 
     const handleButtons = (e) => {
         let button = e.target;
-        switch(button.dataset.cy){
-            case "buttonStart":								
+        switch(button.getAttribute("id")){
+            case "buttonStart":
                 start();
                 break;
-            case "buttonStartFromList":	
+            case "buttonStartFromList":
                 startFromTimerList(button.getAttribute("key"));
                 break;
             case "buttonStop":
@@ -118,8 +104,8 @@
                 countDownTime += button.value * 1000 * 60;
                 var now = new Date();
                 countDownDate = new Date(now.getTime() + countDownTime);
-                show(countDownTime);				
-        }		
+                show(countDownTime);
+        }
     };
 
     const addButtonEvents = () => {
@@ -129,7 +115,6 @@
         });
     };
     addButtonEvents();
-    
 
     const pad = (n) => {return n<10 ? '0'+n : n};
 
@@ -154,19 +139,19 @@
     const add = (time = 0) => {
         if( countDownTime > 0 )
         {
-            let {days, hours, minutes, seconds} = splitTime(time);            
+            let {days, hours, minutes, seconds} = splitTime(time);
             timeList.push(time);
             const list      = document.querySelector('timelist > ul');
 
             const button    = document.createElement('button');
             button.appendChild(document.createTextNode("▶️"));
-            button.setAttribute('data-cy', 'buttonStartFromList');
+            button.setAttribute('id', 'buttonStartFromList');
             button.setAttribute('key', timeList.length-1);
 
             const li        = document.createElement("li");
             li.appendChild(button);
             li.appendChild(document.createTextNode(` ${hours}:${minutes}:${seconds}`));
-            
+
             list.appendChild(li);
             addButtonEvents();
 
@@ -180,53 +165,57 @@
         show();
     }
 
-    const stop = () => { clearInterval(timerInterval); }
+    const stop = () => {         
+        clearInterval(timerInterval); 
+    }
 
     // const startTimerList = () => {
     //     if( timeList.length > 0 ){
     //         countDownTime = timeList[0];
-    //         timeList.shift();         
+    //         timeList.shift();
     //         let list = document.querySelector('timelist > ul');
-    //         list.removeChild(list.childNodes[0]); 
+    //         list.removeChild(list.childNodes[0]);
     //         show(countDownTime);
     //         timerInterval = setInterval(function() {
     //             countDownTime = countDownTime - ( 1000 );
     //             show(countDownTime);
     //             // If the count down is finished, reset and play sound
-    //             if (countDownTime  < 0) {            
+    //             if (countDownTime  < 0) {
     //                 reset();
-    //                 document.querySelector("audio").play();                    
+    //                 document.querySelector("audio").play();
     //                 startTimerList();
     //             }
-    //         }, 1000); 
-    //     }               
+    //         }, 1000);
+    //     }
     // }
 
     const startFromTimerList = (index) => {
-        reset();
         countDownTime = timeList[index];
+        show(countDownTime);
+
         let list = document.querySelector('timelist > ul');
         for(let i = 0; i <= index; i++){
-            timeList.shift();            
-            list.removeChild(list.childNodes[0]); 
+            timeList.shift();
+            list.removeChild(list.childNodes[0]);
         }
         list.childNodes.forEach( (li, i) => {
-            li.querySelector("button").setAttribute("key", i);
-        })        
-        start();
+            li.querySelector("button[id='buttonStartFromList']").setAttribute("key", i);
+        })
+        start(true);
     }
-    
 
-    const start = (index = 0) => {     
-        if( timeList.length > 0 ){
-            startFromTimerList(index);
-            show(countDownTime);
+
+    const start = (listStarted) => {
+        if( timeList.length > 0 && !listStarted){
+            startFromTimerList(0);
+            return;
         }
-
+       
         var now = new Date();
         countDownDate = new Date(now.getTime() + countDownTime);
         // Update the count down every 1 second
-        timerInterval = setInterval(function() {
+
+        timerInterval = setInterval(() => {
             // Get today's date and time
             // var start = new Date().getTime();
 
@@ -237,11 +226,11 @@
 
             show(countDownTime);
             // If the count down is finished, reset and play sound
-            if (countDownTime  < 0) {            
+            if (countDownTime  < 0) {
                 reset();
-                document.querySelector("audio").play();
+                document.querySelector("#alarm").play();
             }
-        }, 200);               
+        }, 200);
     }
 
 </script>
