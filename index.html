@@ -43,6 +43,20 @@
             font-family: 'ZCOOL QingKe HuangYou', cursive;
 			font-size: 10em;
         }
+
+        footer{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        select{
+            font-size: 1.1em;
+            display: block;
+            min-width: 250px;
+            padding: 3px;
+            border: solid 1px darkgray;
+            border-radius: 5px;
+        }
 	</style>
 	<link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
 </head>
@@ -70,16 +84,41 @@
     </main>
     <footer>
         <audio id="alarm" src="media/boxing_bell.mp3" controls>
-        Your browser does not support the <code>audio</code> element.
-    </audio>
+            Your browser does not support the <code>audio</code> element.
+        </audio>
+        <select id="audioSelector"></select>
     </footer>
 </content>
 
 <script>
-    let timeList = [];
-    let countDownTime = 0;
+    let timeList        = [];
+    let countDownTime   = 0;
     let countDownDate;
-    let timerInterval;    
+    let timerInterval; 
+    const mediaFolder   = "media/";
+    const audioFiles    = [
+        "air_horn.mp3",
+        "bike_horn.mp3",
+        "boxing_bell.mp3",
+        "red_alert.mp3",
+        "rooster.mp3",
+        "temple_bell.mp3",
+    ];
+
+    const audioSelector = document.getElementById('audioSelector');
+    const player        = document.getElementById('alarm');
+    player.src          = mediaFolder+audioFiles[0]; 
+    audioFiles.forEach( file => {
+        const option = document.createElement('option');
+        option.value = file;
+        option.appendChild( document.createTextNode(file) );
+        audioSelector.appendChild(option);
+    });
+
+    audioSelector.addEventListener("change", (e) => {
+        const audioFile = audioSelector.options[e.target.selectedIndex].value;
+        player.src      = mediaFolder+audioFile; 
+    });
 
     const handleButtons = (e) => {
         let button = e.target;
