@@ -31,20 +31,20 @@
             background-color: #bde3ff;
             box-shadow: 4px 4px 4px #e3e3e3;
             border-radius: 5px;
-            transition: all 0.5s; 
+            transition: all 0.5s;
         }
         button:hover{
             background-color: rgba(77, 142, 172, 0.5);
             box-shadow: none;
             background-color: white;
             border: 2px solid #b1deff;
-        } 
+        }
 
 
         content {
             display: flex;
             flex-direction: column;
-            justify-content: space-around;            
+            justify-content: space-around;
             align-items: center;
             min-height: 100vh;
         }
@@ -56,17 +56,17 @@
             flex-wrap: wrap;
             align-content: stretch;
             width: 80%;
-        } 
+        }
         header button{
             flex: 1 0 30%;
             margin: 2px;
             padding: 2px 0 2px 0;
-            font-size: 1.9em;                     
+            font-size: 1.9em;
         }
-        
+
         main{
             display: flex;
-        }  
+        }
         timeList{
             font-family: 'ZCOOL QingKe HuangYou', cursive;
 			font-size: 2em;
@@ -102,25 +102,25 @@
             outline: none;
             cursor: pointer;
         }
-        
+
         audio{
             height: 25px;
             border-radius: 5px;
-        }        
+        }
 
         /* Medium devices (tablets, less than 992px) */
-        @media (max-width: 991.98px) { 
+        @media (max-width: 991.98px) {
             button:focus{
                 background-color: rgba(77, 142, 172, 0.5);
                 box-shadow: none;
                 background-color: white;
                 border: 2px solid #b1deff;
-            } 
+            }
             header{
                 flex: 0.25 0 auto;
             }
             header button{
-                font-size: 3em;                     
+                font-size: 3em;
             }
             time{
                 font-size: 15em;
@@ -154,23 +154,23 @@
             <button id="buttonReset">🗑️ <br>Reset</button>
             <button id="buttonList">⊕ <br>To List</button>
         </header>
-        <main>            
+        <main>
             <time>
                 <div id="timerHours"></div>
                 <div id="timerMinutes"></div>
                 <div id="timerSeconds"></div>
-            </time>  
+            </time>
             <timelist>
                 <ul></ul>
-            </timelist>          
+            </timelist>
         </main>
         <footer>
             <div id="selectWrapper">
                 <select id="audioSelector"></select>
             </div>
-            <audio id="alarm" src="media/boxing_bell.mp3" controls>
+            <audio id="alarm" src="media/boxing_bell.mp3" type="audio/mpeg" controls>
                 Your browser does not support the <code>audio</code> element.
-            </audio>            
+            </audio>
         </footer>
     </content>
 </body>
@@ -179,9 +179,9 @@
     let timeList        = [];
     let countDownTime   = 0;
     let countDownDate;
-    let timerInterval; 
+    let timerInterval;
     const mediaFolder   = "media/";
-    const audioFiles    = [        
+    const audioFiles    = [
         "bike_horn.mp3",
         "boxing_bell.mp3",
         "red_alert.mp3",
@@ -192,7 +192,7 @@
 
     const audioSelector = document.getElementById('audioSelector');
     const player        = document.getElementById('alarm');
-    player.src          = mediaFolder+audioFiles[0]; 
+    player.src          = mediaFolder+audioFiles[0];
     audioFiles.forEach( file => {
         const option = document.createElement('option');
         option.value = file;
@@ -202,7 +202,7 @@
 
     audioSelector.addEventListener("change", (e) => {
         const audioFile = audioSelector.options[e.target.selectedIndex].value;
-        player.src      = mediaFolder+audioFile; 
+        player.src      = mediaFolder+audioFile;
     });
 
     const handleButtons = (e) => {
@@ -291,8 +291,8 @@
         show();
     }
 
-    const stop = () => {         
-        clearInterval(timerInterval); 
+    const stop = () => {
+        clearInterval(timerInterval);
     }
 
     // const startTimerList = () => {
@@ -336,7 +336,7 @@
             startFromTimerList(0);
             return;
         }
-       
+
         var now = new Date();
         countDownDate = new Date(now.getTime() + countDownTime);
         // Update the count down every 1 second
