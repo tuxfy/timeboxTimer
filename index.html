@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<body lang="de">
 <head>
     <meta charset="utf-8"/>
 	<style>
@@ -8,19 +8,19 @@
             height: 100%;
             margin: 0;
             padding: 0;
+            color: #404040;
+            background-color: #f8f8f8;
         }
-
         #beta{
             color:white;
             background-color: lightblue;
             padding: 3px;
             text-align: center;
         }
-
         content {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: space-around;            
             align-items: center;
             min-height: 100vh;
         }
@@ -28,18 +28,32 @@
 
         header{
             display: flex;
+            flex: 0.20 0 auto;
             flex-wrap: wrap;
             align-content: stretch;
+            width: 80%;
+        }  
+        header button{
+            flex: 1 0 30%;
+            margin: 2px;
+            padding: 4px 0 4px 0;
+            font-size: 1.7em;
+            border: 2px solid #bde3ff;
+            background-color: #bde3ff;
+            box-shadow: 4px 4px 4px #e3e3e3;
+            border-radius: 5px;
+            transition: all 0.5s;            
         }
+        header button:hover, header button:focus{
+            background-color: rgba(77, 142, 172, 0.5);
+            box-shadow: none;
+            background-color: white;
+            border: 2px solid #b1deff;
+        }
+
         main{
             display: flex;
-        }
-
-
-        header button{
-            flex: 1 0 33%;
-            font-size: 1.5em;
-        }
+        }  
         timeList{
             font-family: 'ZCOOL QingKe HuangYou', cursive;
 			font-size: 1.3em;
@@ -58,47 +72,67 @@
             align-items: center;
         }
         select{
+            width: 100%;
             font-size: 1.1em;
-            display: block;
             min-width: 250px;
             padding: 3px;
-            border: solid 1px darkgray;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            outline: none;
+            cursor: pointer;
+        }
+        select::-ms-expand {
+            display: none;
+        }
+        select:focus::-ms-value {
+            background-color: transparent;
+        }
+        audio{
+            height: 25px;
             border-radius: 5px;
         }
 	</style>
 	<link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
 </head>
 
-<div id="beta">
-    beta
-</div>
-<content>
-    <header>
-        <button id="button1" value="1">➕ <br>1min</button>
-        <button id="button5" value="5">➕ <br>5min</button>
-        <button id="button10" value="10">➕ <br>10min</button>
-        <button id="buttonStart">▶️ <br>Start</button>
-        <button id="buttonStop">⏹️ <br>Stop</button>
-        <button id="buttonReset">🗑️ <br>Reset</button>
-        <button id="buttonList">⊕ <br>To List</button>
-    </header>
-    <main>
-        <time>
-            <div id="timerHours"></div>
-            <div id="timerMinutes"></div>
-            <div id="timerSeconds"></div>
-        </time>
-        <timelist>
-            <ul></ul>
-        </timelist>
-    </main>
-    <footer>
-        <audio id="alarm" src="media/boxing_bell.mp3" controls>
-            Your browser does not support the <code>audio</code> element.
-        </audio>
-        <select id="audioSelector"></select>
-    </footer>
-</content>
+<body>
+    <!-- <div id="beta">
+        beta
+    </div> -->
+    <content>
+        <header>
+            <button id="button1" value="1">➕ <br>1min</button>
+            <button id="button5" value="5">➕ <br>5min</button>
+            <button id="button10" value="10">➕ <br>10min</button>
+            <button id="buttonStart">▶️ <br>Start</button>
+            <button id="buttonStop">⏹️ <br>Stop</button>
+            <button id="buttonReset">🗑️ <br>Reset</button>
+            <button id="buttonList">⊕ <br>To List</button>
+        </header>
+        <main>
+            <time>
+                <div id="timerHours"></div>
+                <div id="timerMinutes"></div>
+                <div id="timerSeconds"></div>
+            </time>
+            <timelist>
+                <ul></ul>
+            </timelist>
+        </main>
+        <footer>
+            <div id="selectWrapper">
+                <select id="audioSelector"></select>
+            </div>
+            <audio id="alarm" src="media/boxing_bell.mp3" controls>
+                Your browser does not support the <code>audio</code> element.
+            </audio>            
+        </footer>
+    </content>
+</body>
 
 <script>
     let timeList        = [];
