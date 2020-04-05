@@ -17,12 +17,28 @@
         ::-moz-focus-inner {
             border: 0;
         }
+        ::-moz-focus-outer {
+            border: 0;
+        }
         ::-ms-expand {
             display: none;
         }
         :focus::-ms-value {
             background-color: transparent;
         }
+        button{
+            border: 2px solid #bde3ff;
+            background-color: #bde3ff;
+            box-shadow: 4px 4px 4px #e3e3e3;
+            border-radius: 5px;
+            transition: all 0.5s; 
+        }
+        button:hover{
+            background-color: rgba(77, 142, 172, 0.5);
+            box-shadow: none;
+            background-color: white;
+            border: 2px solid #b1deff;
+        } 
 
 
         content {
@@ -40,34 +56,27 @@
             flex-wrap: wrap;
             align-content: stretch;
             width: 80%;
-        }  
+        } 
         header button{
             flex: 1 0 30%;
             margin: 2px;
             padding: 2px 0 2px 0;
-            font-size: 1.9em;
-            border: 2px solid #bde3ff;
-            background-color: #bde3ff;
-            box-shadow: 4px 4px 4px #e3e3e3;
-            border-radius: 5px;
-            transition: all 0.5s;          
+            font-size: 1.9em;                     
         }
-        header button:hover{
-            background-color: rgba(77, 142, 172, 0.5);
-            box-shadow: none;
-            background-color: white;
-            border: 2px solid #b1deff;
-        }        
-
+        
         main{
             display: flex;
         }  
         timeList{
             font-family: 'ZCOOL QingKe HuangYou', cursive;
-			font-size: 1.3em;
+			font-size: 2em;
+            text-align: right;
         }
         timelist ul{
             list-style: none;
+        }
+        timelist button{
+            font-size: 1em;
         }
         time{
             font-family: 'ZCOOL QingKe HuangYou', cursive;
@@ -97,6 +106,37 @@
         audio{
             height: 25px;
             border-radius: 5px;
+        }        
+
+        /* Medium devices (tablets, less than 992px) */
+        @media (max-width: 991.98px) { 
+            button:focus{
+                background-color: rgba(77, 142, 172, 0.5);
+                box-shadow: none;
+                background-color: white;
+                border: 2px solid #b1deff;
+            } 
+            header{
+                flex: 0.25 0 auto;
+            }
+            header button{
+                font-size: 3em;                     
+            }
+            time{
+                font-size: 15em;
+            }
+            timeList{
+                font-size: 3em;
+            }
+            timelist button{
+                font-size: 1.8em;
+            }
+            select{
+                font-size: 2em;
+            }
+            audio, select{
+                height: 50px;
+            }
         }
 
 	</style>
@@ -114,15 +154,15 @@
             <button id="buttonReset">🗑️ <br>Reset</button>
             <button id="buttonList">⊕ <br>To List</button>
         </header>
-        <main>
+        <main>            
             <time>
                 <div id="timerHours"></div>
                 <div id="timerMinutes"></div>
                 <div id="timerSeconds"></div>
-            </time>
+            </time>  
             <timelist>
                 <ul></ul>
-            </timelist>
+            </timelist>          
         </main>
         <footer>
             <div id="selectWrapper">
@@ -235,8 +275,8 @@
             button.setAttribute('key', timeList.length-1);
 
             const li        = document.createElement("li");
-            li.appendChild(button);
             li.appendChild(document.createTextNode(` ${hours}:${minutes}:${seconds}`));
+            li.appendChild(button);
 
             list.appendChild(li);
             addButtonEvents();
