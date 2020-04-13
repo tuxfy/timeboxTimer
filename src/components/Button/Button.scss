@@ -1,0 +1,22 @@
+button{
+    padding: 8px;
+    background: #fff; /* fallback color for old browsers */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-out;
+    :hover{
+        background: rgba(255, 255, 255, 0.0);
+    }
+    .big{
+        margin: 2px;
+        padding: 2px 0 2px 0;
+        font-size: 1.9em;
+    }
+    .small{
+        font-size: 1em;
+    }
+}
