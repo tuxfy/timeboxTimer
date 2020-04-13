@@ -9,14 +9,23 @@ html, body {
 }
 
 body{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: stretch;
-    min-height: 100vh;
-    .header{
+    #root{
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        min-height: 100vh;
+    }
+    header{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    main{
+        display: flex;
+        flex-direction: column;
+    }
+    footer{
+        background-color: green;        
     }
 }
 // body{
