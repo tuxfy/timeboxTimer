@@ -4,7 +4,10 @@
   "description": "",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "test": "parcel test",
+    "build": "parcel build index.html",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "license": "MIT",
   "dependencies": {
@@ -14,6 +17,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "babel-preset-nano-react-app": "^0.1.0",
+    "cypress": "^4.4.0",
     "node-sass": "^4.13.1",
     "parcel-bundler": "^1.12.4"
   },

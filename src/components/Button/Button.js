@@ -1,20 +1,27 @@
-import React from "react";
-import "./Button.scss";
+import React from 'react';
+import './Button.scss';
 
-const Button = ({title, size})=> {   
+const Button = ({ title, size, value, clickEvent }) => {
     const classes = {
-        small: "small",
-        medium: "medium",
-        big: "big"
-    }
-  
+        small: 'small',
+        medium: 'medium',
+        big: 'big',
+    };
+
     return (
-      <>        
-        <button className={classes[size]} onClick={event => event.stopPropagation()}>
-            {title}
-        </button>        
-      </>
+        <>
+            <button
+                className={classes[size]}
+                value={value}
+                onClick={(event) => {
+                    event.stopPropagation();
+                    clickEvent(parseInt(event.currentTarget.value));
+                }}
+            >
+                {title}
+            </button>
+        </>
     );
-  };
-  
-  export default Button;
+};
+
+export default Button;
