@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "parcel index.html",
-    "test": "parcel test",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "build": "parcel build index.html",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
@@ -16,14 +17,30 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-jest": "^25.3.0",
     "babel-preset-nano-react-app": "^0.1.0",
     "cypress": "^4.4.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^25.3.0",
     "node-sass": "^4.13.1",
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.4",
+    "react-test-renderer": "^16.13.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "cypress"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    }
   },
   "babel": {
     "presets": [
-      "nano-react-app"
+      "nano-react-app",
+      "@babel/preset-env",
+      "@babel/preset-react"
     ],
     "plugins": [
       [
