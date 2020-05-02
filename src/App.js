@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.scss';
 import Button from './components/Button/Button';
+import Clock from './components/Clock/Clock';
 import { newUUID } from './utils/UUID';
 
 const App = () => {
+    const [min, setMin] = useState(0);
+    const [sec, setSec] = useState(0);
 
     const addTime = (minutes) => {
-        console.log("minutes",minutes);
+        console.log(minutes, "add");
+        setMin((min + minutes));        
     };
     const timerAction = (minutes) => {
         console.log("minutes",minutes);
@@ -39,7 +43,12 @@ const App = () => {
                     );
                 })}
             </header>
-            <main>sdskjdhsjhdsjkhd</main>
+            <main>
+                <Clock
+                    min={min}
+                    sec={sec}>
+                </Clock>
+            </main>
             <footer>
                 <p>Copyright 2009 Your name</p>
             </footer>
