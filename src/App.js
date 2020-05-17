@@ -9,11 +9,12 @@ const App = () => {
     const [sec, setSec] = useState(0);
 
     const addTime = (minutes) => {
-        console.log(minutes, "add");
-        setMin((min + minutes));        
+        setMin((min + minutes >= 60 ? 0 : min + minutes ));        
     };
     const timerAction = (minutes) => {
         console.log("minutes",minutes);
+        setMin(0);  
+        setSec(0);  
     };
 
 
