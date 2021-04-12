@@ -1,4 +1,4 @@
-# simpleTimer
+# timer for meeting timeboxing
 
 Just a little tool for timeboxing in meetings
 
